@@ -28,13 +28,57 @@ class _CounterScreenState extends State<CounterScreen> {
           )
         ],
       )),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.plus_one),
-        onPressed: () {
-          clickCounter++;
-          setState(() {});
-        },
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          CustomButton(
+            icon: Icons.refresh_outlined,
+            onPressed: () {
+              setState(() {
+                clickCounter = 0;
+              });
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomButton(
+            icon: Icons.plus_one,
+            onPressed: () {
+              setState(() {
+                clickCounter++;
+              });
+            },
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomButton(
+            icon: Icons.exposure_minus_1,
+            onPressed: () {
+              setState(() {
+                if (clickCounter > 0) {
+                  clickCounter--;
+                }
+              });
+            },
+          )
+        ],
       ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onPressed;
+  const CustomButton({super.key, required this.icon, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: onPressed,
+      child: Icon(icon),
     );
   }
 }
